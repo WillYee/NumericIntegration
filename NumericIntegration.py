@@ -15,10 +15,10 @@ def main():
 
 	for thread_num in range(START_NUM_THREAD, END_NUM_THREAD):
 		for subdivision_num in range(0, UPPERBOUND):
-			process = Popen(["./build/NumericIntegration", "-D", str(math.pow(2,subdivision_num)), "-T", str(thread_num)], stdout = PIPE)
+			process = Popen(["./build/NumericIntegration", "-D", str(math.pow(BASE, subdivision_num)), "-T", str(thread_num)], stdout = PIPE)
 			(output, err) = process.communicate()
 			process.wait()
-			print str(thread_num) + "," + str(math.pow(2,subdivision_num)) + "," + output.rstrip()
+			print str(thread_num) + "," + str(math.pow(BASE, subdivision_num)) + "," + output.rstrip()
 	return
 
 if __name__ == "__main__":
