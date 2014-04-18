@@ -14,7 +14,7 @@ def main():
 
 	for thread_num in range(START_NUM_THREAD, END_NUM_THREAD):
 		for subdivision_num in range(START_SUBDIVISIONS, END_SUBDIVISIONS, 500):
-			process = Popen(["./Assign1", "-D", str(subdivision_num), "-T", str(thread_num)], stdout = PIPE)
+			process = Popen(["./build/NumericalIntegration", "-D", str(subdivision_num), "-T", str(thread_num)], stdout = PIPE)
 			(output, err) = process.communicate()
 			process.wait()
 			print str(thread_num) + "," + str(subdivision_num) + "," + output.rstrip()
