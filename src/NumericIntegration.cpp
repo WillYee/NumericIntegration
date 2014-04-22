@@ -36,11 +36,11 @@ int main(int argc, char* argv[])
 
 	omp_set_num_threads(parser.GetNumThreads());
 
-	double total_area   = 0;
+	double total_volume   = 0;
 	double fullTileArea = surface.GetTileArea();
 	double start        = omp_get_wtime();
 
-#pragma omp parallel for default(none), shared(input_number, fullTileArea, surface), reduction(+:total_area)
+#pragma omp parallel for default(none), shared(input_number, fullTileArea, surface), reduction(+:total_volume)
 	for (unsigned long long i = 0; i < input_number*input_number; i++)
 	{
 		unsigned long long iu = i % input_number;
@@ -51,7 +51,7 @@ int main(int argc, char* argv[])
 			(iv == input_number && (iu < input_number && iu != 0)) || // top edge
 			(iu == input_number && (iv < input_number && iv != 0))) // right edge
 		{
-			total_area += (fullTileArea / 2) * surface.Height(iu, iv, input_number);
+			total_volume += (fullTileArea / 2) * surface.Height(iu, iv, input_number);
 			continue;
 		}
 
@@ -60,17 +60,17 @@ int main(int argc, char* argv[])
 			(iv == input_number && iu == 0) || // corner max, 0
 			(iv == input_number && iu == input_number)) // corner max,max
 		{
-			total_area += (fullTileArea / 4) * surface.Height(iu, iv, input_number);
+			total_volume += (fullTileArea / 4) * surface.Height(iu, iv, input_number);
 			continue;
 		}
 
-		total_area += fullTileArea * surface.Height(iu, iv, input_number);
+		total_volume += fullTileArea * surface.Height(iu, iv, input_number);
 	}
 
 	double end = omp_get_wtime();
 
 	std::cout.precision(10);
-	std::cout << end - start << "s" <<  "," << total_area << std::endl;
+	std::cout << end - start << "s" <<  "," << total_volume << std::endl;
 
 	return 0;
 }

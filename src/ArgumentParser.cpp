@@ -31,7 +31,7 @@ bool ArgumentParser::Parse()
 	numDivisions = atoi(argv[2].c_str());
 	numThreads = atoi(argv[4].c_str());
 
-	if (argv[1].compare( "-D") == 0 && 
+	if (argv[1].compare("-D") == 0 && 
 	    numDivisions           != 0 && // Make sure the 3rd argument is an integer
 	    argv[3].compare("-T")  == 0 && 
 	    numThreads             != 0) // Make sure the 5th argument is an integer
